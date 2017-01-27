@@ -6,14 +6,15 @@ import javax.swing.*;
 // YOU WILL NEED TO INSTALL THE API FROM APLU.CH. THE LINK IS POSTED IN GROUPME. FOLLOW THE INSTALLATION INSTRUCTIONS ON THE WEBSITE
 //TRY USING THE TRIGGERS OF AN XBOX CONTROLLER. YOU SHOULD FEEL BOTH VIBRATION AND THE CONSOLE WILL PRINT OUT VALUES.
 
-public class RumbleDemo {
+public class Listener {
+    Translator translator;
     private XboxController xc;
     private int leftVibrate = 0;
     private int rightVibrate = 0;
 
-    public RumbleDemo() {
+    public Listener() {
         xc = new XboxController();
-
+        translator = new Translator();
         if (!xc.isConnected()) {
             JOptionPane.showMessageDialog(null,
                     "Xbox controller not connected.",
@@ -25,9 +26,11 @@ public class RumbleDemo {
 
         xc.addXboxControllerListener(new XboxControllerAdapter() {
             public void leftTrigger(double value) {
-                printValues(value);
-                leftVibrate = (int) (65535 * value * value);
-                xc.vibrate(leftVibrate, rightVibrate);
+                translator.translateLeftTriggerValue(value);
+            }
+
+            public void leftShoulder(boolean pressed) {
+                translator.translateLeftBumperValue(pressed);
             }
 
             public void rightTrigger(double value) {
@@ -40,7 +43,7 @@ public class RumbleDemo {
         JOptionPane.showMessageDialog(null,
                 "Xbox controller connected.\n" +
                         "Press left or right trigger, Ok to quit.",
-                "RumbleDemo V1.0 (www.aplu.ch)",
+                "Listener V1.0 (www.aplu.ch)",
                 JOptionPane.PLAIN_MESSAGE);
 
         xc.release();
@@ -48,7 +51,7 @@ public class RumbleDemo {
     }
 
     public static void main(String[] args) {
-        new RumbleDemo();
+        new Listener();
     }
 
     public void printValues(double value) {
