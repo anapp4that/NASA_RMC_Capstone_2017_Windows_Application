@@ -34,9 +34,11 @@ public class Listener {
             }
 
             public void rightTrigger(double value) {
-                printValues(value);
-                rightVibrate = (int) (65535 * value * value);
-                xc.vibrate(leftVibrate, rightVibrate);
+                translator.translateRightTriggerValue(value);
+            }
+
+            public void rightShoulder(boolean pressed) {
+                translator.translateRightBumperValue(pressed);
             }
         });
 
