@@ -6,8 +6,8 @@ import javax.swing.*;
 // YOU WILL NEED TO INSTALL THE API FROM APLU.CH. THE LINK IS POSTED IN GROUPME. FOLLOW THE INSTALLATION INSTRUCTIONS ON THE WEBSITE
 //TRY USING THE TRIGGERS OF AN XBOX CONTROLLER. YOU SHOULD FEEL BOTH VIBRATION AND THE CONSOLE WILL PRINT OUT VALUES.
 
-public class Listener {
-    Translator translator;
+public class Listener extends Thread {
+    private volatile Translator translator;
     private XboxController xc;
     private int leftVibrate = 0;
     private int rightVibrate = 0;
@@ -42,21 +42,12 @@ public class Listener {
             }
         });
 
-        JOptionPane.showMessageDialog(null,
-                "Xbox controller connected.\n" +
-                        "Press left or right trigger, Ok to quit.",
-                "Listener V1.0 (www.aplu.ch)",
-                JOptionPane.PLAIN_MESSAGE);
 
-        xc.release();
-        System.exit(0);
     }
 
-    public static void main(String[] args) {
-        new Listener();
+    public Translator getTranslator() {
+        return translator;
     }
 
-    public void printValues(double value) {
-        System.out.print("value = " + value + "\n");
-    }
+
 }

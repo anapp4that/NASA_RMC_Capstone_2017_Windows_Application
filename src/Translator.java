@@ -5,7 +5,7 @@ import java.util.BitSet;
  */
 public class Translator {
 
-    BitSet bitArray;
+    public volatile BitSet bitArray;
     private boolean inverseLeftTrigger;
     private boolean inverseRightTrigger;
 
@@ -17,6 +17,7 @@ public class Translator {
 
     public void translateLeftBumperValue(boolean pressed) {
         inverseLeftTrigger = pressed;
+        bitArray.set(Constants.LEFT_SIDE_DIRECTION_INDEX, true);
     }
 
     public void translateLeftTriggerValue(double value) {
@@ -92,5 +93,6 @@ public class Translator {
 
     public void translateRightBumperValue(boolean pressed) {
         inverseRightTrigger = pressed;
+        bitArray.set(Constants.RIGHT_SIDE_DIRECTION_INDEX, true);
     }
 }
