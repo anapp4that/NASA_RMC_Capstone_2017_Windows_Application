@@ -40,6 +40,34 @@ public class Listener extends Thread {
             public void rightShoulder(boolean pressed) {
                 translator.translateRightBumperValue(pressed);
             }
+
+            //Directional Pad
+            //0->North = Forward: both wheels = 01111
+            //4->South = Backward: both wheels = 11111
+            //2->East = Right: left wheel = 01111 and right wheel = 11111
+            //6->West = Left: left wheel = 11111 and right wheel = 01111
+            public void dpad(int direction, boolean pressed) {
+                //Forward
+                translator.translateLeftTriggerValue(1);
+                translator.translateRightTriggerValue(1);
+
+                //Backward
+                translator.translateLeftBumperValue(true);
+                translator.translateRightBumperValue(true);
+                translator.translateLeftTriggerValue(1);
+                translator.translateRightTriggerValue(1);
+
+                //Right
+                translator.translateRightBumperValue(true);
+                translator.translateRightTriggerValue(1);
+                translator.translateLeftTriggerValue(1);
+
+                //Left
+                translator.translateLeftBumperValue(true);
+                translator.translateLeftTriggerValue(1);
+                translator.translateRightTriggerValue(1);
+            }
+
         });
 
 
