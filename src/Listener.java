@@ -67,7 +67,6 @@ public class Listener extends Thread {
                 translator.translateLeftTriggerValue(1);
                 translator.translateRightTriggerValue(1);
             }
-
         });
 
 
