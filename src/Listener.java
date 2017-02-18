@@ -9,8 +9,6 @@ import javax.swing.*;
 public class Listener extends Thread {
     private volatile Translator translator;
     private XboxController xc;
-    private int leftVibrate = 0;
-    private int rightVibrate = 0;
 
     public Listener() {
         xc = new XboxController();
@@ -39,6 +37,25 @@ public class Listener extends Thread {
 
             public void rightShoulder(boolean pressed) {
                 translator.translateRightBumperValue(pressed);
+            }
+
+            public void dpad(int direction, boolean pressed) {
+
+                if (direction == 2) {
+                    translator.translateRightBumperValue(pressed);
+                } else if (direction == 4) {
+                    translator.translateRightBumperValue(pressed);
+                    translator.translateLeftBumperValue(pressed);
+                } else if (direction == 6) {
+                    translator.translateLeftBumperValue(pressed);
+                }
+                if (pressed) {
+                    translator.translateLeftTriggerValue(1.0);
+                    translator.translateRightTriggerValue(1.0);
+                } else {
+                    translator.translateLeftTriggerValue(0.0);
+                    translator.translateRightTriggerValue(0.0);
+                }
             }
         });
 
