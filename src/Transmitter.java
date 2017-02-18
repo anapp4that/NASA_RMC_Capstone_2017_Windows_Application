@@ -40,8 +40,15 @@ public class Transmitter extends Thread {
                     DataOutputStream out = new DataOutputStream(raspberryPi.getOutputStream());
                     if (listener.getTranslator().bitArray.toByteArray().length < 3) {
                         out.writeInt(listener.getTranslator().bitArray.toByteArray().length);
-                    } else
+                    } else {
+                        out.flush();
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
                         continue;
+                    }
                     out.write(listener.getTranslator().bitArray.toByteArray());
                     out.flush();
                     try {
@@ -57,6 +64,7 @@ public class Transmitter extends Thread {
                 e.printStackTrace();
                 break;
             }
+
         }
 
     }
