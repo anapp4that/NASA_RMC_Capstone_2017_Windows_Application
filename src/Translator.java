@@ -15,17 +15,6 @@ public class Translator {
         bitArray = new BitSet(11);
     }
 
-    public static byte[] toByteArray(BitSet bits) {
-        byte[] bytes = new byte[bits.length() + 7 / 8];
-        for (int i = 0; i < bits.length(); i++) {
-            if (bits.get(i)) {
-                bytes[bytes.length - i / 8 - 1] |= 1 << (i % 8);
-            }
-
-        }
-        return bytes;
-    }
-
     public void translateLeftBumperValue(boolean pressed) {
         inverseLeftTrigger = pressed;
         bitArray.set(Constants.LEFT_SIDE_DIRECTION_INDEX, pressed);
