@@ -52,9 +52,9 @@ public class Translator {
         } else if (value >= .8) {
             bitArray.set(Constants.RIGHT_SIDE_SPEED_START_INDEX, true);
         } else if (value >= .6) {
-            bitArray.set(7, Constants.RIGHT_SIDE_SPEED_END_INDEX + 1, true);
+            bitArray.set(6, Constants.RIGHT_SIDE_SPEED_END_INDEX + 1, true);
         } else if (value >= .4) {
-            bitArray.set(7, true);
+            bitArray.set(6, true);
         } else if (value >= .2) {
             bitArray.set(Constants.RIGHT_SIDE_SPEED_END_INDEX, true);
         }

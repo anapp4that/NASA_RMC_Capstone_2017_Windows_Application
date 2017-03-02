@@ -36,25 +36,31 @@ public class Transmitter extends Thread {
 
                 System.out.println("Just connected to " + raspberryPi.getRemoteSocketAddress());
 
+                byte[] previousSend = null;
+                byte[] currentSend;
                 while (true) {
                     DataOutputStream out = new DataOutputStream(raspberryPi.getOutputStream());
-                    if (listener.getTranslator().bitArray.toByteArray().length < 3) {
-                        out.writeInt(listener.getTranslator().bitArray.toByteArray().length);
-                    } else {
+                    currentSend = listener.getTranslator().bitArray.toByteArray();
+                    if (currentSend != null && !currentSend.equals(previousSend)) {
+                        if (currentSend.length < 3) {
+                            out.writeInt(currentSend.length);
+                        } else {
+                            out.flush();
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                            continue;
+                        }
+                        out.write(currentSend);
+                        previousSend = currentSend;
                         out.flush();
                         try {
                             Thread.sleep(200);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                        continue;
-                    }
-                    out.write(listener.getTranslator().bitArray.toByteArray());
-                    out.flush();
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
 
