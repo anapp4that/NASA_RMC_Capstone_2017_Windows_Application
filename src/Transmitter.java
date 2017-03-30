@@ -1,6 +1,5 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
@@ -8,12 +7,14 @@ import java.net.SocketTimeoutException;
  * Created by Incoruptable on 2/5/2017.
  */
 public class Transmitter extends Thread {
-    private ServerSocket serverSocket;
+    private Socket compSocket;
     private Listener listener;
 
     public Transmitter(int port) throws IOException {
-        serverSocket = new ServerSocket(port);
-        serverSocket.setSoTimeout(10000);
+        compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT);
+        compSocket.setSoTimeout(10000);
+        DataOutputStream dout = new DataOutputStream(compSocket.getOutputStream());
+        dout.writeUTF("comp");
         listener = new Listener();
         listener.start();
     }
@@ -31,15 +32,12 @@ public class Transmitter extends Thread {
     public void run() {
         while (true) {
             try {
-                System.out.print("Waiting for RaspberryPi Connection");
-                Socket raspberryPi = serverSocket.accept();
-
-                System.out.println("Just connected to " + raspberryPi.getRemoteSocketAddress());
+                System.out.println("Just connected to " + compSocket.getRemoteSocketAddress());
 
                 byte[] previousSend = null;
                 byte[] currentSend;
                 while (true) {
-                    DataOutputStream out = new DataOutputStream(raspberryPi.getOutputStream());
+                    DataOutputStream out = new DataOutputStream(compSocket.getOutputStream());
                     currentSend = listener.getTranslator().bitArray.toByteArray();
                     if (currentSend != null && !currentSend.equals(previousSend)) {
                         if (currentSend.length < 3) {
