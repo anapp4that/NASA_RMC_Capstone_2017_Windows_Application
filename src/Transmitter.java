@@ -1,5 +1,6 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
@@ -14,7 +15,8 @@ public class Transmitter extends Thread {
         compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT);
         compSocket.setSoTimeout(10000);
         DataOutputStream dout = new DataOutputStream(compSocket.getOutputStream());
-        dout.writeUTF("comp");
+        PrintWriter printWriter = new PrintWriter(dout, true);
+        printWriter.println("comp");
         listener = new Listener();
         listener.start();
     }

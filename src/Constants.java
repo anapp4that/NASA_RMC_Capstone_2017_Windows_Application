@@ -9,6 +9,6 @@ public class Constants {
     public static final int RIGHT_SIDE_SPEED_START_INDEX = 5;
     public static final int RIGHT_SIDE_SPEED_END_INDEX = 7;
 
-    public static final String SERVER_IP_ADDRESS = "PUT WHATEVER IP YOU ARE USING";
+    public static final String SERVER_IP_ADDRESS = "uaf135300.ddns.uark.edu";
     public static final int SERVER_PORT = 6000;
 }
