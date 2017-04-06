@@ -12,7 +12,8 @@ public class Translator {
     public Translator() {
         inverseLeftTrigger = false;
         inverseRightTrigger = false;
-        bitArray = new BitSet(11);
+        bitArray = new BitSet(13);
+        bitArray.set(0, 13, false);
     }
 
     public void translateLeftBumperValue(boolean pressed) {
@@ -23,7 +24,6 @@ public class Translator {
     public void translateLeftTriggerValue(double value) {
         bitArray.set(Constants.LEFT_SIDE_DIRECTION_INDEX, inverseLeftTrigger);
         bitArray.set(Constants.LEFT_SIDE_SPEED_START_INDEX, Constants.LEFT_SIDE_SPEED_END_INDEX + 1, false);
-        System.out.print(value);
         if (value == 1) {
             bitArray.set(Constants.LEFT_SIDE_SPEED_START_INDEX, true);
             bitArray.set(Constants.LEFT_SIDE_SPEED_END_INDEX, true);
@@ -37,15 +37,11 @@ public class Translator {
             bitArray.set(Constants.LEFT_SIDE_SPEED_END_INDEX, true);
         }
 
-        System.out.print(bitArray.toString());
-        System.out.println();
-
     }
 
     public void translateRightTriggerValue(double value) {
         bitArray.set(Constants.RIGHT_SIDE_DIRECTION_INDEX, inverseRightTrigger);
         bitArray.set(Constants.RIGHT_SIDE_SPEED_START_INDEX, Constants.RIGHT_SIDE_SPEED_END_INDEX + 1, false);
-        System.out.print(value);
         if (value == 1) {
             bitArray.set(Constants.RIGHT_SIDE_SPEED_START_INDEX, true);
             bitArray.set(Constants.RIGHT_SIDE_SPEED_END_INDEX, true);
@@ -58,9 +54,6 @@ public class Translator {
         } else if (value >= .2) {
             bitArray.set(Constants.RIGHT_SIDE_SPEED_END_INDEX, true);
         }
-
-        System.out.print(bitArray.toString());
-        System.out.println();
     }
 
     public void translateRightBumperValue(boolean pressed) {
