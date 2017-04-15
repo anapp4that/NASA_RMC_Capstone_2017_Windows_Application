@@ -36,11 +36,10 @@ public class Transmitter extends Thread {
             String previousSend = "";
             String currentSend;
             while (true) {
-                BitSet bitArray = listener.getTranslator().bitArray;
-                currentSend = bitSetToString(bitArray, 13);
+                currentSend = listener.getTranslator().currentCommands.toString();
                 if (currentSend != null && !currentSend.equals(previousSend)) {
                     System.out.print(currentSend + "\n");
-                    if (currentSend.length() == 13) {
+                    if (currentSend.length() == 22) {
                         dout.writeUTF(currentSend);
                         previousSend = currentSend;
                         dout.flush();

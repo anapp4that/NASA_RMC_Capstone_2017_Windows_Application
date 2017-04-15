@@ -35,6 +35,22 @@ public class Listener extends Thread {
                 translator.translateRightTriggerValue(value);
             }
 
+            public void buttonA(boolean pressed) {
+                translator.translateDrumValue(pressed, true);
+            }
+
+            public void buttonB(boolean pressed) {
+                translator.translateDrumValue(pressed, false);
+            }
+
+            public void buttonX(boolean pressed) {
+                translator.translateArmValue(pressed, true);
+            }
+
+            public void buttonY(boolean pressed) {
+                translator.translateArmValue(pressed, false);
+            }
+
             public void rightShoulder(boolean pressed) {
                 translator.translateRightBumperValue(pressed);
             }
