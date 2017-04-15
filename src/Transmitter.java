@@ -13,12 +13,14 @@ public class Transmitter extends Thread {
     private DataOutputStream dout;
 
     public Transmitter() throws IOException {
-        try {
-            compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT_2);
-        } catch (ConnectException ex) {
-            compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT_1);
+        while (true) {
+            try {
+                compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT_1);
+            } catch (ConnectException cex) {
+                continue;
+            }
+            break;
         }
-        compSocket.setSoTimeout(10000);
         dout = new DataOutputStream(compSocket.getOutputStream());
         dout.writeUTF("comp");
         listener = new Listener();
