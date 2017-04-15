@@ -1,6 +1,5 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.BitSet;
@@ -11,7 +10,6 @@ import java.util.BitSet;
 public class Transmitter extends Thread {
     private Socket compSocket;
     private Listener listener;
-    private PrintWriter printWriter;
     private DataOutputStream dout;
 
     public Transmitter() throws IOException {
