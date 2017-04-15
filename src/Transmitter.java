@@ -1,6 +1,7 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.BitSet;
 
@@ -14,7 +15,11 @@ public class Transmitter extends Thread {
     private DataOutputStream dout;
 
     public Transmitter() throws IOException {
-        compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT);
+        try {
+            compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT_2);
+        } catch (ConnectException ex) {
+            compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT_1);
+        }
         compSocket.setSoTimeout(10000);
         dout = new DataOutputStream(compSocket.getOutputStream());
         dout.writeUTF("comp");
