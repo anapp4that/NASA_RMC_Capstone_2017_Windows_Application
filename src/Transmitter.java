@@ -17,10 +17,12 @@ public class Transmitter extends Thread {
             try {
                 compSocket = new Socket(Constants.SERVER_IP_ADDRESS, Constants.SERVER_PORT_1);
             } catch (ConnectException cex) {
+                System.out.print("Connection Exception trying again.");
                 continue;
             }
             break;
         }
+
         dout = new DataOutputStream(compSocket.getOutputStream());
         dout.writeUTF("comp");
         listener = new Listener();
